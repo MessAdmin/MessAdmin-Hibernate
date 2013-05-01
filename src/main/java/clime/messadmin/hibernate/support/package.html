@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+<title>http://opensource.atlassian.com/projects/hibernate/browse/HHH-5541</title>
+</head>
+<body>
+<p>Wrappers for Hibernate Statistics classes.</p>
+
+<p><code>org.hibernate.stat.XXXStatistics</code> went from Class to Interface
+in Hibernate 3.5.0. Thus we can't call any method on those objects, since
+that would result in a {@link IncompatibleClassChangeError} at runtime.</p>
+
+<p>This package contains wrappers around said classes that use reflexion to avoid
+falling into this trap.</p>
+</body>
+</html>

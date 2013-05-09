@@ -31,6 +31,7 @@ class QueryStatisticsTable extends BaseStatisticsTable {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Override
 	protected String[] getApplicationTabularDataLabels(ServletContext context) {
 		return new String[] {
 				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.name"),//$NON-NLS-1
@@ -45,9 +46,10 @@ class QueryStatisticsTable extends BaseStatisticsTable {
 		};
 	}
 
+	@Override
 	protected Object[][] getApplicationTabularData(ServletContext context, Statistics statistics) {
 		NumberFormat numberFormatter = NumberFormat.getNumberInstance(I18NSupport.getAdminLocale());
-		List data = new LinkedList();
+		List<Object> data = new LinkedList<Object>();
 
 		String[] names = statistics.getQueries();
 		for (int i = 0; i < names.length; ++i) {
@@ -67,11 +69,12 @@ class QueryStatisticsTable extends BaseStatisticsTable {
 				});
 		}
 
-		Object[][] result = (Object[][]) data.toArray(new Object[data.size()][]);
+		Object[][] result = data.toArray(new Object[data.size()][]);
 		return result;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected void appendValue(StringBuffer buffer, int cellNumber, Object value) {
 		if (cellNumber == 0) {
 			buffer.append("<code>");

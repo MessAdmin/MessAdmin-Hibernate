@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package clime.messadmin.hibernate.support;
 
 import java.io.Serializable;
@@ -17,12 +20,12 @@ public class CollectionStatistics extends BaseStatisticsSupport implements Seria
 
 	static {
 		try {
-			Class collectionStatistics = Class.forName("org.hibernate.stat.CollectionStatistics");//$NON-NLS-1$
-			getLoadCount     = collectionStatistics.getMethod("getLoadCount",     null);//$NON-NLS-1$
-			getFetchCount    = collectionStatistics.getMethod("getFetchCount",    null);//$NON-NLS-1$
-			getRecreateCount = collectionStatistics.getMethod("getRecreateCount", null);//$NON-NLS-1$
-			getRemoveCount   = collectionStatistics.getMethod("getRemoveCount",   null);//$NON-NLS-1$
-			getUpdateCount   = collectionStatistics.getMethod("getUpdateCount",   null);//$NON-NLS-1$
+			Class<?> collectionStatistics = Class.forName("org.hibernate.stat.CollectionStatistics");//$NON-NLS-1$
+			getLoadCount     = collectionStatistics.getMethod("getLoadCount"    );//$NON-NLS-1$
+			getFetchCount    = collectionStatistics.getMethod("getFetchCount"   );//$NON-NLS-1$
+			getRecreateCount = collectionStatistics.getMethod("getRecreateCount");//$NON-NLS-1$
+			getRemoveCount   = collectionStatistics.getMethod("getRemoveCount"  );//$NON-NLS-1$
+			getUpdateCount   = collectionStatistics.getMethod("getUpdateCount"  );//$NON-NLS-1$
 		} catch (NoSuchMethodException e) {
 		} catch (ClassNotFoundException e) {
 		} catch (SecurityException e) {

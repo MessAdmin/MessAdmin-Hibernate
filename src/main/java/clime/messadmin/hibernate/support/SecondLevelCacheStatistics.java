@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package clime.messadmin.hibernate.support;
 
 import java.io.Serializable;
@@ -21,14 +24,14 @@ public class SecondLevelCacheStatistics extends BaseStatisticsSupport implements
 
 	static {
 		try {
-			Class secondLevelCacheStatistics = Class.forName("org.hibernate.stat.SecondLevelCacheStatistics");//$NON-NLS-1$
-			getHitCount             = secondLevelCacheStatistics.getMethod("getHitCount",             null);//$NON-NLS-1$
-			getMissCount            = secondLevelCacheStatistics.getMethod("getMissCount",            null);//$NON-NLS-1$
-			getPutCount             = secondLevelCacheStatistics.getMethod("getPutCount",             null);//$NON-NLS-1$
-			getElementCountInMemory = secondLevelCacheStatistics.getMethod("getElementCountInMemory", null);//$NON-NLS-1$
-			getElementCountOnDisk   = secondLevelCacheStatistics.getMethod("getElementCountOnDisk",   null);//$NON-NLS-1$
-			getSizeInMemory         = secondLevelCacheStatistics.getMethod("getSizeInMemory",         null);//$NON-NLS-1$
-			getEntries              = secondLevelCacheStatistics.getMethod("getEntries",              null);//$NON-NLS-1$
+			Class<?> secondLevelCacheStatistics = Class.forName("org.hibernate.stat.SecondLevelCacheStatistics");//$NON-NLS-1$
+			getHitCount             = secondLevelCacheStatistics.getMethod("getHitCount"            );//$NON-NLS-1$
+			getMissCount            = secondLevelCacheStatistics.getMethod("getMissCount"           );//$NON-NLS-1$
+			getPutCount             = secondLevelCacheStatistics.getMethod("getPutCount"            );//$NON-NLS-1$
+			getElementCountInMemory = secondLevelCacheStatistics.getMethod("getElementCountInMemory");//$NON-NLS-1$
+			getElementCountOnDisk   = secondLevelCacheStatistics.getMethod("getElementCountOnDisk"  );//$NON-NLS-1$
+			getSizeInMemory         = secondLevelCacheStatistics.getMethod("getSizeInMemory"        );//$NON-NLS-1$
+			getEntries              = secondLevelCacheStatistics.getMethod("getEntries"             );//$NON-NLS-1$
 		} catch (NoSuchMethodException e) {
 		} catch (ClassNotFoundException e) {
 		} catch (SecurityException e) {

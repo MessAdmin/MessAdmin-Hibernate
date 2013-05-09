@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package clime.messadmin.hibernate.support;
 
 import java.io.Serializable;
@@ -22,15 +25,15 @@ public class QueryStatistics extends BaseStatisticsSupport implements Serializab
 
 	static {
 		try {
-			Class queryStatistics = Class.forName("org.hibernate.stat.QueryStatistics");//$NON-NLS-1$
-			getExecutionCount    = queryStatistics.getMethod("getExecutionCount",    null);//$NON-NLS-1$
-			getCacheHitCount     = queryStatistics.getMethod("getCacheHitCount",     null);//$NON-NLS-1$
-			getCachePutCount     = queryStatistics.getMethod("getCachePutCount",     null);//$NON-NLS-1$
-			getCacheMissCount    = queryStatistics.getMethod("getCacheMissCount",    null);//$NON-NLS-1$
-			getExecutionRowCount = queryStatistics.getMethod("getExecutionRowCount", null);//$NON-NLS-1$
-			getExecutionAvgTime  = queryStatistics.getMethod("getExecutionAvgTime",  null);//$NON-NLS-1$
-			getExecutionMaxTime  = queryStatistics.getMethod("getExecutionMaxTime",  null);//$NON-NLS-1$
-			getExecutionMinTime  = queryStatistics.getMethod("getExecutionMinTime",  null);//$NON-NLS-1$
+			Class<?> queryStatistics = Class.forName("org.hibernate.stat.QueryStatistics");//$NON-NLS-1$
+			getExecutionCount    = queryStatistics.getMethod("getExecutionCount"   );//$NON-NLS-1$
+			getCacheHitCount     = queryStatistics.getMethod("getCacheHitCount"    );//$NON-NLS-1$
+			getCachePutCount     = queryStatistics.getMethod("getCachePutCount"    );//$NON-NLS-1$
+			getCacheMissCount    = queryStatistics.getMethod("getCacheMissCount"   );//$NON-NLS-1$
+			getExecutionRowCount = queryStatistics.getMethod("getExecutionRowCount");//$NON-NLS-1$
+			getExecutionAvgTime  = queryStatistics.getMethod("getExecutionAvgTime" );//$NON-NLS-1$
+			getExecutionMaxTime  = queryStatistics.getMethod("getExecutionMaxTime" );//$NON-NLS-1$
+			getExecutionMinTime  = queryStatistics.getMethod("getExecutionMinTime" );//$NON-NLS-1$
 		} catch (NoSuchMethodException e) {
 		} catch (ClassNotFoundException e) {
 		} catch (SecurityException e) {
@@ -87,7 +90,7 @@ public class QueryStatistics extends BaseStatisticsSupport implements Serializab
 	}
 
 	/**
-	 * average time in ms taken by the excution of this query onto the DB
+	 * average time in ms taken by the execution of this query onto the DB
 	 * @see org.hibernate.stat.QueryStatistics#getExecutionAvgTime()
 	 */
 	public long getExecutionAvgTime() {
@@ -95,7 +98,7 @@ public class QueryStatistics extends BaseStatisticsSupport implements Serializab
 	}
 
 	/**
-	 * max time in ms taken by the excution of this query onto the DB
+	 * max time in ms taken by the execution of this query onto the DB
 	 * @see org.hibernate.stat.QueryStatistics#getExecutionMaxTime()
 	 */
 	public long getExecutionMaxTime() {
@@ -103,7 +106,7 @@ public class QueryStatistics extends BaseStatisticsSupport implements Serializab
 	}
 
 	/**
-	 * min time in ms taken by the excution of this query onto the DB
+	 * min time in ms taken by the execution of this query onto the DB
 	 * @see org.hibernate.stat.QueryStatistics#getExecutionMinTime()
 	 */
 	public long getExecutionMinTime() {

@@ -27,6 +27,7 @@ class SecondLevelCacheStatisticsTable extends BaseStatisticsTable {
 		super();
 	}
 
+	@Override
 	protected String[] getApplicationTabularDataLabels(ServletContext context) {
 		return new String[] {
 				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.name"),//$NON-NLS-1
@@ -39,10 +40,11 @@ class SecondLevelCacheStatisticsTable extends BaseStatisticsTable {
 		};
 	}
 
+	@Override
 	protected Object[][] getApplicationTabularData(ServletContext context, Statistics statistics) {
 		NumberFormat numberFormatter = NumberFormat.getNumberInstance(I18NSupport.getAdminLocale());
 		NumberFormat bytesFormatter = BytesFormat.getBytesInstance(I18NSupport.getAdminLocale(), true);
-		List data = new LinkedList();
+		List<Object> data = new LinkedList<Object>();
 
 		String[] names = statistics.getSecondLevelCacheRegionNames();
 		for (int i = 0; i < names.length; ++i) {
@@ -60,7 +62,7 @@ class SecondLevelCacheStatisticsTable extends BaseStatisticsTable {
 				});
 		}
 
-		Object[][] result = (Object[][]) data.toArray(new Object[data.size()][]);
+		Object[][] result = data.toArray(new Object[data.size()][]);
 		return result;
 	}
 

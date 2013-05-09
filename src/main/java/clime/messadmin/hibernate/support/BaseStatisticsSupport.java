@@ -21,16 +21,19 @@ abstract class BaseStatisticsSupport implements Serializable {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String toString() {
 		return delegate != null ? delegate.toString() : super.toString();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean equals(Object obj) {
 		return delegate != null ? delegate.equals(obj) : super.equals(obj);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public int hashCode() {
 		return delegate != null ? delegate.hashCode() : super.hashCode();
 	}
@@ -45,7 +48,7 @@ abstract class BaseStatisticsSupport implements Serializable {
 			return defaultValue;
 		}
 		try {
-			return method.invoke(delegate, null);
+			return method.invoke(delegate);
 		} catch (Exception ignore) {
 			return defaultValue;
 		}
@@ -56,7 +59,7 @@ abstract class BaseStatisticsSupport implements Serializable {
 			return defaultValue;
 		}
 		try {
-			return ((Long) method.invoke(delegate, null)).longValue();
+			return ((Long) method.invoke(delegate)).longValue();
 		} catch (Exception ignore) {
 			return defaultValue;
 		}

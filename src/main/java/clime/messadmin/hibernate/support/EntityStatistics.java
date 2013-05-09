@@ -1,3 +1,6 @@
+/**
+ *
+ */
 package clime.messadmin.hibernate.support;
 
 import java.io.Serializable;
@@ -18,13 +21,13 @@ public class EntityStatistics extends BaseStatisticsSupport implements Serializa
 
 	static {
 		try {
-			Class entityStatistics = Class.forName("org.hibernate.stat.EntityStatistics");//$NON-NLS-1$
-			getDeleteCount            = entityStatistics.getMethod("getDeleteCount", null);//$NON-NLS-1$
-			getInsertCount            = entityStatistics.getMethod("getDeleteCount", null);//$NON-NLS-1$
-			getLoadCount              = entityStatistics.getMethod("getLoadCount",   null);//$NON-NLS-1$
-			getUpdateCount            = entityStatistics.getMethod("getUpdateCount", null);//$NON-NLS-1$
-			getFetchCount             = entityStatistics.getMethod("getFetchCount",  null);//$NON-NLS-1$
-			getOptimisticFailureCount = entityStatistics.getMethod("getOptimisticFailureCount", null);//$NON-NLS-1$
+			Class<?> entityStatistics = Class.forName("org.hibernate.stat.EntityStatistics");//$NON-NLS-1$
+			getDeleteCount            = entityStatistics.getMethod("getDeleteCount");//$NON-NLS-1$
+			getInsertCount            = entityStatistics.getMethod("getDeleteCount");//$NON-NLS-1$
+			getLoadCount              = entityStatistics.getMethod("getLoadCount"  );//$NON-NLS-1$
+			getUpdateCount            = entityStatistics.getMethod("getUpdateCount");//$NON-NLS-1$
+			getFetchCount             = entityStatistics.getMethod("getFetchCount" );//$NON-NLS-1$
+			getOptimisticFailureCount = entityStatistics.getMethod("getOptimisticFailureCount");//$NON-NLS-1$
 		} catch (NoSuchMethodException e) {
 		} catch (ClassNotFoundException e) {
 		} catch (SecurityException e) {

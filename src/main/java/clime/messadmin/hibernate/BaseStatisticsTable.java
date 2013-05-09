@@ -42,10 +42,12 @@ abstract class BaseStatisticsTable extends BaseTabularDataProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	protected String getCellClass(int cellNumber, Object value) {
 		return cellNumber > 0 ? "number" : super.getCellClass(cellNumber, value);
 	}
 
+	@Override
 	protected void appendFooter(StringBuffer buffer, String[] labels) {
 		buffer.append("<tfoot><tr>\n");
 		for (int i = 0; i < labels.length; ++i) {

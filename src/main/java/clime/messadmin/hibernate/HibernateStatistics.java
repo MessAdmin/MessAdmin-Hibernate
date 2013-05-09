@@ -33,7 +33,6 @@ import clime.messadmin.providers.spi.ApplicationDataProvider;
 import clime.messadmin.providers.spi.ApplicationLifeCycleProvider;
 import clime.messadmin.utils.DateUtils;
 import clime.messadmin.utils.FastDateFormat;
-import clime.messadmin.utils.Longs;
 import clime.messadmin.utils.StringUtils;
 
 /**
@@ -113,6 +112,7 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 	/***********************************************************************/
 
 	/** {@inheritDoc} */
+	@Override
 	public int getPriority() {
 		return 2000;
 	}
@@ -173,12 +173,7 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 		appendStat(out, numberFormatter, "session.flushes",             statistics.getFlushCount());
 		appendStat(out, numberFormatter, "session.transactions",         statistics.getTransactionCount());
 		appendStat(out, numberFormatter, "session.successfulTransactions", statistics.getSuccessfulTransactionCount());
-		try {
-			appendStat(out, numberFormatter, "session.optimisticLockFailures", statistics.getOptimisticFailureCount());
-		} catch (Throwable t) {
-			// statistics.getOptimisticFailureCount() is since Hibernate 3.1
-			// don't fail if running Hibernate 3.0
-		}
+		appendStat(out, numberFormatter, "session.optimisticLockFailures", statistics.getOptimisticFailureCount());
 		appendStat(out, numberFormatter, "session.statementsPrepared",  statistics.getPrepareStatementCount());
 		appendStat(out, numberFormatter, "session.statementsClosed",    statistics.getCloseStatementCount());
 		out.append("</ul>\n");
@@ -201,31 +196,26 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 		final double totalQueryCacheHitMissCount = Math.max(1, statistics.getQueryCacheHitCount()+statistics.getQueryCacheMissCount());
 		appendStat(out, numberFormatter, "global.queryCachePuts",            statistics.getQueryCachePutCount());
 		appendStat(out,                  "global.queryCacheHits",            new Number[] {
-				Longs.valueOf(statistics.getQueryCacheHitCount()),
+				Long.valueOf(statistics.getQueryCacheHitCount()),
 				new Double(statistics.getQueryCacheHitCount()/totalQueryCacheHitMissCount)
 			});
 		appendStat(out,                  "global.queryCacheMisses",          new Number[] {
-				Longs.valueOf(statistics.getQueryCacheMissCount()),
+				Long.valueOf(statistics.getQueryCacheMissCount()),
 				new Double(statistics.getQueryCacheMissCount()/totalQueryCacheHitMissCount)
 			});
 		appendStat(out, numberFormatter, "global.maxQueryTime",              statistics.getQueryExecutionMaxTime());
-		try {
-			appendStat(out, "global.maxQueryTimeQuery.hql", "<code>"+StringUtils.escapeXml(statistics.getQueryExecutionMaxTimeQueryString())+"</code>");
-			if (sessionFactory instanceof SessionFactoryImplementor) {
-				appendStat(out, "global.maxQueryTimeQuery.sql", "<code>"+StringUtils.escapeXml(hql2sql((SessionFactoryImplementor)sessionFactory, statistics.getQueryExecutionMaxTimeQueryString()))+"</code>");
-			}
-		} catch (Throwable t) {
-			// statistics.getQueryExecutionMaxTimeQueryString() is since Hibernate 3.1
-			// don't do fail if running with Hibernate 3.0
+		appendStat(out, "global.maxQueryTimeQuery.hql", "<code>"+StringUtils.escapeXml(statistics.getQueryExecutionMaxTimeQueryString())+"</code>");
+		if (sessionFactory instanceof SessionFactoryImplementor) {
+			appendStat(out, "global.maxQueryTimeQuery.sql", "<code>"+StringUtils.escapeXml(hql2sql((SessionFactoryImplementor)sessionFactory, statistics.getQueryExecutionMaxTimeQueryString()))+"</code>");
 		}
 		final double totalSecondLevelCacheHitMissCount = Math.max(1, statistics.getSecondLevelCacheHitCount()+statistics.getSecondLevelCacheMissCount());
 		appendStat(out, numberFormatter, "global.secondLevelCachePuts",   statistics.getSecondLevelCachePutCount());
 		appendStat(out,                  "global.secondLevelCacheHits",   new Number[] {
-				Longs.valueOf(statistics.getSecondLevelCacheHitCount()),
+				Long.valueOf(statistics.getSecondLevelCacheHitCount()),
 				new Double(statistics.getSecondLevelCacheHitCount()/totalSecondLevelCacheHitMissCount)
 			});
 		appendStat(out,                  "global.secondLevelCacheMisses", new Number[] {
-				Longs.valueOf(statistics.getSecondLevelCacheMissCount()),
+				Long.valueOf(statistics.getSecondLevelCacheMissCount()),
 				new Double(statistics.getSecondLevelCacheMissCount()/totalSecondLevelCacheHitMissCount)
 			});
 		out.append("</ul>\n");
@@ -364,6 +354,7 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void serviceWithContext(HttpServletRequest request, HttpServletResponse response, String context) throws ServletException, IOException {
 		String hibernateAction = request.getParameter(HIBERNATE_ACTION_NAME);
 		if (StringUtils.isBlank(hibernateAction)) {

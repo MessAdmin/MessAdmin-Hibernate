@@ -28,13 +28,14 @@ class CollectionStatisticsTable extends BaseStatisticsTable {
 
 	@Override
 	protected String[] getApplicationTabularDataLabels(ServletContext context) {
+		final ClassLoader cl = I18NSupport.getClassLoader(context);
 		return new String[] {
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.collections.label.name"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.collections.label.loadCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.collections.label.fetchCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.collections.label.recreateCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.collections.label.updateCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.collections.label.removeCount")//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.collections.label.name"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.collections.label.loadCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.collections.label.fetchCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.collections.label.recreateCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.collections.label.updateCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.collections.label.removeCount")//$NON-NLS-1
 		};
 	}
 

@@ -121,17 +121,18 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 
 	/** {@inheritDoc} */
 	public String getApplicationDataTitle(ServletContext context) {
-		return I18NSupport.getLocalizedMessage(BUNDLE_NAME, "title");//$NON-NLS-1$
+		return I18NSupport.getLocalizedMessage(BUNDLE_NAME, I18NSupport.getClassLoader(context), "title");//$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} */
 	public String getXHTMLApplicationData(ServletContext context) {
+		final ClassLoader cl = I18NSupport.getClassLoader(context);
 		SessionFactory sessionFactory = lookupSessionFactory(context);
 		if (sessionFactory == null) {
-			return I18NSupport.getLocalizedMessage(BUNDLE_NAME, "error.noSessionFactory");//$NON-NLS-1$
+			return I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "error.noSessionFactory");//$NON-NLS-1$
 		}
 		if (sessionFactory.isClosed()) {
-			return I18NSupport.getLocalizedMessage(BUNDLE_NAME, "error.sessionFactory.closed");//$NON-NLS-1$
+			return I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "error.sessionFactory.closed");//$NON-NLS-1$
 		}
 		final Statistics statistics = sessionFactory.getStatistics();
 		NumberFormat numberFormatter = NumberFormat.getNumberInstance(I18NSupport.getAdminLocale());
@@ -146,14 +147,14 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 		out.append("<p>");
 		if (statistics.isStatisticsEnabled()) {
 			String urlDisableStats = getActionUrl(context, HIBERNATE_ACTION_SET_STATISTICS_OFF);
-			out.append(buildActionLink(urlDisableStats, I18NSupport.getLocalizedMessage(BUNDLE_NAME, "action.disableStats"), this));//$NON-NLS-1$
+			out.append(buildActionLink(urlDisableStats, I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "action.disableStats"), this));//$NON-NLS-1$
 		} else {
 			String urlEnableStats = getActionUrl(context, HIBERNATE_ACTION_SET_STATISTICS_ON);
-			out.append(buildActionLink(urlEnableStats, I18NSupport.getLocalizedMessage(BUNDLE_NAME, "action.enableStats"), this));//$NON-NLS-1$
+			out.append(buildActionLink(urlEnableStats, I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "action.enableStats"), this));//$NON-NLS-1$
 		}
 		out.append("&nbsp;|&nbsp;");
 		String urlClearStats = getActionUrl(context, HIBERNATE_ACTION_CLEAR_STATISTICS);
-		out.append(buildActionLink(urlClearStats, I18NSupport.getLocalizedMessage(BUNDLE_NAME, "action.clearStatistics"), this));//$NON-NLS-1$
+		out.append(buildActionLink(urlClearStats, I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "action.clearStatistics"), this));//$NON-NLS-1$
 		out.append("</p>\n");
 
 		if (! statistics.isStatisticsEnabled()) {
@@ -163,72 +164,72 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 
 		/* General Sessions metrics */
 
-		out.append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, "session.title"));//$NON-NLS-1$
+		out.append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "session.title"));//$NON-NLS-1$
 		out.append("\n<ul>");
 		//out.append("<li>").append(I18NSupport.getLocalizedMessage("key.1", statistics.getSomeValue()).append("</li>"));
-		appendStat(out,                  "session.startTime",      StringUtils.escapeXml(dateFormatter.format(new Date(statistics.getStartTime()))));
-		appendStat(out, numberFormatter, "session.connectionsObtained", statistics.getConnectCount());
-		appendStat(out, numberFormatter, "session.sessionsOpened",       statistics.getSessionOpenCount());
-		appendStat(out, numberFormatter, "session.sessionsClosed",       statistics.getSessionCloseCount());
-		appendStat(out, numberFormatter, "session.flushes",             statistics.getFlushCount());
-		appendStat(out, numberFormatter, "session.transactions",         statistics.getTransactionCount());
-		appendStat(out, numberFormatter, "session.successfulTransactions", statistics.getSuccessfulTransactionCount());
-		appendStat(out, numberFormatter, "session.optimisticLockFailures", statistics.getOptimisticFailureCount());
-		appendStat(out, numberFormatter, "session.statementsPrepared",  statistics.getPrepareStatementCount());
-		appendStat(out, numberFormatter, "session.statementsClosed",    statistics.getCloseStatementCount());
+		appendStat(out, cl,                  "session.startTime",      StringUtils.escapeXml(dateFormatter.format(new Date(statistics.getStartTime()))));
+		appendStat(out, cl, numberFormatter, "session.connectionsObtained", statistics.getConnectCount());
+		appendStat(out, cl, numberFormatter, "session.sessionsOpened",       statistics.getSessionOpenCount());
+		appendStat(out, cl, numberFormatter, "session.sessionsClosed",       statistics.getSessionCloseCount());
+		appendStat(out, cl, numberFormatter, "session.flushes",             statistics.getFlushCount());
+		appendStat(out, cl, numberFormatter, "session.transactions",         statistics.getTransactionCount());
+		appendStat(out, cl, numberFormatter, "session.successfulTransactions", statistics.getSuccessfulTransactionCount());
+		appendStat(out, cl, numberFormatter, "session.optimisticLockFailures", statistics.getOptimisticFailureCount());
+		appendStat(out, cl, numberFormatter, "session.statementsPrepared",  statistics.getPrepareStatementCount());
+		appendStat(out, cl, numberFormatter, "session.statementsClosed",    statistics.getCloseStatementCount());
 		out.append("</ul>\n");
 
 
 		/* Global metrics */
 
-		out.append("<br/>\n").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, "global.title")).append("\n<ul>");
-		appendStat(out, numberFormatter, "global.entitiesLoaded",    statistics.getEntityLoadCount());
-		appendStat(out, numberFormatter, "global.entitiesFetched",   statistics.getEntityFetchCount());
-		appendStat(out, numberFormatter, "global.entitiesInserted",  statistics.getEntityInsertCount());
-		appendStat(out, numberFormatter, "global.entitiesUpdated",   statistics.getEntityUpdateCount());
-		appendStat(out, numberFormatter, "global.entitiesDeleted",   statistics.getEntityDeleteCount());
-		appendStat(out, numberFormatter, "global.collectionsLoaded",    statistics.getCollectionLoadCount());
-		appendStat(out, numberFormatter, "global.collectionsFetched",   statistics.getCollectionFetchCount());
-		appendStat(out, numberFormatter, "global.collectionsRecreated", statistics.getCollectionRecreateCount());
-		appendStat(out, numberFormatter, "global.collectionsUpdated",   statistics.getCollectionUpdateCount());
-		appendStat(out, numberFormatter, "global.collectionsRemoved",   statistics.getCollectionRemoveCount());
-		appendStat(out, numberFormatter, "global.queriesExecutedToDatabase", statistics.getQueryExecutionCount());
+		out.append("<br/>\n").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "global.title")).append("\n<ul>");
+		appendStat(out, cl, numberFormatter, "global.entitiesLoaded",    statistics.getEntityLoadCount());
+		appendStat(out, cl, numberFormatter, "global.entitiesFetched",   statistics.getEntityFetchCount());
+		appendStat(out, cl, numberFormatter, "global.entitiesInserted",  statistics.getEntityInsertCount());
+		appendStat(out, cl, numberFormatter, "global.entitiesUpdated",   statistics.getEntityUpdateCount());
+		appendStat(out, cl, numberFormatter, "global.entitiesDeleted",   statistics.getEntityDeleteCount());
+		appendStat(out, cl, numberFormatter, "global.collectionsLoaded",    statistics.getCollectionLoadCount());
+		appendStat(out, cl, numberFormatter, "global.collectionsFetched",   statistics.getCollectionFetchCount());
+		appendStat(out, cl, numberFormatter, "global.collectionsRecreated", statistics.getCollectionRecreateCount());
+		appendStat(out, cl, numberFormatter, "global.collectionsUpdated",   statistics.getCollectionUpdateCount());
+		appendStat(out, cl, numberFormatter, "global.collectionsRemoved",   statistics.getCollectionRemoveCount());
+		appendStat(out, cl, numberFormatter, "global.queriesExecutedToDatabase", statistics.getQueryExecutionCount());
 		final double totalQueryCacheHitMissCount = Math.max(1, statistics.getQueryCacheHitCount()+statistics.getQueryCacheMissCount());
-		appendStat(out, numberFormatter, "global.queryCachePuts",            statistics.getQueryCachePutCount());
-		appendStat(out,                  "global.queryCacheHits",            new Number[] {
+		appendStat(out, cl, numberFormatter, "global.queryCachePuts",            statistics.getQueryCachePutCount());
+		appendStat(out, cl,                  "global.queryCacheHits",
 				Long.valueOf(statistics.getQueryCacheHitCount()),
 				new Double(statistics.getQueryCacheHitCount()/totalQueryCacheHitMissCount)
-			});
-		appendStat(out,                  "global.queryCacheMisses",          new Number[] {
+			);
+		appendStat(out, cl,                  "global.queryCacheMisses",
 				Long.valueOf(statistics.getQueryCacheMissCount()),
 				new Double(statistics.getQueryCacheMissCount()/totalQueryCacheHitMissCount)
-			});
-		appendStat(out, numberFormatter, "global.maxQueryTime",              statistics.getQueryExecutionMaxTime());
-		appendStat(out, "global.maxQueryTimeQuery.hql", "<code>"+StringUtils.escapeXml(statistics.getQueryExecutionMaxTimeQueryString())+"</code>");
+			);
+		appendStat(out, cl, numberFormatter, "global.maxQueryTime",              statistics.getQueryExecutionMaxTime());
+		appendStat(out, cl, "global.maxQueryTimeQuery.hql", "<code>"+StringUtils.escapeXml(statistics.getQueryExecutionMaxTimeQueryString())+"</code>");
 		if (sessionFactory instanceof SessionFactoryImplementor) {
-			appendStat(out, "global.maxQueryTimeQuery.sql", "<code>"+StringUtils.escapeXml(hql2sql((SessionFactoryImplementor)sessionFactory, statistics.getQueryExecutionMaxTimeQueryString()))+"</code>");
+			appendStat(out, cl, "global.maxQueryTimeQuery.sql", "<code>"+StringUtils.escapeXml(hql2sql((SessionFactoryImplementor)sessionFactory, statistics.getQueryExecutionMaxTimeQueryString()))+"</code>");
 		}
 		final double totalSecondLevelCacheHitMissCount = Math.max(1, statistics.getSecondLevelCacheHitCount()+statistics.getSecondLevelCacheMissCount());
-		appendStat(out, numberFormatter, "global.secondLevelCachePuts",   statistics.getSecondLevelCachePutCount());
-		appendStat(out,                  "global.secondLevelCacheHits",   new Number[] {
+		appendStat(out, cl, numberFormatter, "global.secondLevelCachePuts",   statistics.getSecondLevelCachePutCount());
+		appendStat(out, cl,                  "global.secondLevelCacheHits",
 				Long.valueOf(statistics.getSecondLevelCacheHitCount()),
 				new Double(statistics.getSecondLevelCacheHitCount()/totalSecondLevelCacheHitMissCount)
-			});
-		appendStat(out,                  "global.secondLevelCacheMisses", new Number[] {
+			);
+		appendStat(out, cl,                  "global.secondLevelCacheMisses",
 				Long.valueOf(statistics.getSecondLevelCacheMissCount()),
 				new Double(statistics.getSecondLevelCacheMissCount()/totalSecondLevelCacheHitMissCount)
-			});
+			);
 		out.append("</ul>\n");
 
 
 		/* Detailed metrics */
 
-		out.append("<br/>\n").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.title")).append("<br/>\n");
+		out.append("<br/>\n").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.title")).append("<br/>\n");
 
 		// Entities
 		String[] entityNames = statistics.getEntityNames();
 		out.append("<fieldset>");
-		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("entities").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.title", new Object[] {numberFormatter.format(entityNames.length)})).append("</legend>\n");
+		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("entities").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.title", numberFormatter.format(entityNames.length))).append("</legend>\n");
 		out.append("<div id=\"").append(baseHTMLid).append("entities-target").append("\">");
 		new EntityStatisticsTable().getXHTMLApplicationData(out, context, statistics);
 //		dump(out, entityNames, new CallBack() {
@@ -245,7 +246,7 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 		// Collections
 		String[] collectionRoleNames = statistics.getCollectionRoleNames();
 		out.append("<fieldset>");
-		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("CollectionRoles").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.collections.title", new Object[] {numberFormatter.format(collectionRoleNames.length)})).append("</legend>\n");
+		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("CollectionRoles").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.collections.title", numberFormatter.format(collectionRoleNames.length))).append("</legend>\n");
 		out.append("<div id=\"").append(baseHTMLid).append("CollectionRoles-target").append("\">");
 		new CollectionStatisticsTable().getXHTMLApplicationData(out, context, statistics);
 //		dump(out, collectionRoleNames, new CallBack() {
@@ -262,7 +263,7 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 		// Queries
 		String[] queries = statistics.getQueries();
 		out.append("<fieldset>");
-		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("Queries").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.title", new Object[] {numberFormatter.format(queries.length)})).append("</legend>\n");
+		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("Queries").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.title", numberFormatter.format(queries.length))).append("</legend>\n");
 		out.append("<div id=\"").append(baseHTMLid).append("Queries-target").append("\">");
 		new QueryStatisticsTable(sessionFactory).getXHTMLApplicationData(out, context, statistics);
 //		dump(out, queries, new CallBack() {
@@ -279,7 +280,7 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 		// 2nd-level cache
 		String[] secondLevelCacheRegionNames = statistics.getSecondLevelCacheRegionNames();
 		out.append("<fieldset>");
-		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("SecondLevelCacheRegion").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.title", new Object[] {numberFormatter.format(secondLevelCacheRegionNames.length)})).append("</legend>\n");
+		out.append("<legend class=\"collapsible\" id=\"").append(baseHTMLid).append("SecondLevelCacheRegion").append("\">").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.title", numberFormatter.format(secondLevelCacheRegionNames.length))).append("</legend>\n");
 		out.append("<div id=\"").append(baseHTMLid).append("SecondLevelCacheRegion-target").append("\">");
 		new SecondLevelCacheStatisticsTable().getXHTMLApplicationData(out, context, statistics);
 //		dump(out, secondLevelCacheRegionNames, new CallBack() {
@@ -296,14 +297,11 @@ public class HibernateStatistics extends BaseAdminActionWithContext implements A
 		return out.toString();
 	}
 
-	private void appendStat(StringBuffer out, NumberFormat formatter, String name, long value) {
-		appendStat(out, name, formatter.format(value));
+	private void appendStat(StringBuffer out, ClassLoader cl, NumberFormat formatter, String name, long value) {
+		appendStat(out, cl, name, formatter.format(value));
 	}
-	private void appendStat(StringBuffer out, String nameKey, String value) {
-		appendStat(out, nameKey, new Object[] {value});
-	}
-	private void appendStat(StringBuffer out, String nameKey, Object[] values) {
-		out.append("<li>").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, nameKey, values)).append("</li>");
+	private void appendStat(StringBuffer out, ClassLoader cl, String nameKey, Object... values) {
+		out.append("<li>").append(I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, nameKey, values)).append("</li>");
 	}
 
 	private static abstract class CallBack {

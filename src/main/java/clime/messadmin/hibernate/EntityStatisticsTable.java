@@ -28,14 +28,15 @@ class EntityStatisticsTable extends BaseStatisticsTable {
 
 	@Override
 	protected String[] getApplicationTabularDataLabels(ServletContext context) {
+		final ClassLoader cl = I18NSupport.getClassLoader(context);
 		return new String[] {
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.label.name"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.label.loadCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.label.fetchCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.label.insertCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.label.updateCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.label.deleteCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.entities.label.optimisticFailureCount")//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.label.name"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.label.loadCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.label.fetchCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.label.insertCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.label.updateCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.label.deleteCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.entities.label.optimisticFailureCount")//$NON-NLS-1
 		};
 	}
 

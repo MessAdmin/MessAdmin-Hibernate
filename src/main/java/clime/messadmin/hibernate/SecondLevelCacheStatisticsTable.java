@@ -29,14 +29,15 @@ class SecondLevelCacheStatisticsTable extends BaseStatisticsTable {
 
 	@Override
 	protected String[] getApplicationTabularDataLabels(ServletContext context) {
+		final ClassLoader cl = I18NSupport.getClassLoader(context);
 		return new String[] {
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.name"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.hitCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.missCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.putCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.elementCountInMemory"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.elementCountOnDisk"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.secondLevelCaches.label.sizeInMemory")//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.label.name"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.label.hitCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.label.missCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.label.putCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.label.elementCountInMemory"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.label.elementCountOnDisk"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.secondLevelCaches.label.sizeInMemory")//$NON-NLS-1
 		};
 	}
 

@@ -33,16 +33,17 @@ class QueryStatisticsTable extends BaseStatisticsTable {
 
 	@Override
 	protected String[] getApplicationTabularDataLabels(ServletContext context) {
+		final ClassLoader cl = I18NSupport.getClassLoader(context);
 		return new String[] {
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.name"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.cacheHitCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.cacheMissCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.cachePutCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.executionCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.executionRowCount"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.executionMinTime"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.executionMaxTime"),//$NON-NLS-1
-				I18NSupport.getLocalizedMessage(BUNDLE_NAME, "detail.queries.label.executionAvgTime")//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.name"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.cacheHitCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.cacheMissCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.cachePutCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.executionCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.executionRowCount"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.executionMinTime"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.executionMaxTime"),//$NON-NLS-1
+				I18NSupport.getLocalizedMessage(BUNDLE_NAME, cl, "detail.queries.label.executionAvgTime")//$NON-NLS-1
 		};
 	}
 

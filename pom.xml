@@ -82,7 +82,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>[2.0.8,)</version><!-- technically 1.2.9 is enough, but it is so old... -->
+			<version>[2.5.6,)</version><!-- technically 1.2.9 is enough, but it is so old... -->
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -93,7 +93,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>[2.0.8,)</version><!-- technically 1.2.9 is enough, but it is so old... -->
+			<version>[2.5.6,)</version><!-- technically 1.2.9 is enough, but it is so old... -->
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -104,7 +104,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>[2.0.8,)</version><!-- technically 1.2.9 is enough, but it is so old... -->
+			<version>[2.5.6,)</version><!-- technically 1.2.9 is enough, but it is so old... -->
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
